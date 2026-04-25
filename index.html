@@ -1,0 +1,1817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Peter Nguyen — IT Specialist · TS/SCI</title>
+  <meta name="description" content="IT Specialist with TS/SCI clearance. Securing systems, managing infrastructure, and building reliable networks.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    /* === RESET & TOKENS === */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0e13;
+      --bg-elevated: #111720;
+      --bg-card: #141a22;
+      --bg-card-hover: #1a2129;
+      --border: rgba(232, 238, 248, 0.07);
+      --border-strong: rgba(96, 165, 250, 0.22);
+      --text: #e8eef8;
+      --text-secondary: #8a94a7;
+      --text-tertiary: #5a6575;
+      --accent: #60a5fa;
+      --accent-bright: #93c5fd;
+      --accent-bg: rgba(96, 165, 250, 0.08);
+      --warn: #fbbf24;
+      --grid: rgba(232, 238, 248, 0.025);
+      --max-width: 1200px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Geist', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      font-weight: 400;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* Subtle grid backdrop */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+      mask-image: radial-gradient(ellipse at 50% 30%, black 20%, transparent 75%);
+      -webkit-mask-image: radial-gradient(ellipse at 50% 30%, black 20%, transparent 75%);
+    }
+
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; cursor: pointer; }
+
+    ::selection { background: var(--accent); color: var(--bg); }
+
+    /* === NAV === */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.25rem 0;
+      background: rgba(10, 14, 13, 0.72);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo::before {
+      content: '';
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 10px var(--accent);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.25rem;
+      list-style: none;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.05em;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    .nav-links a::before {
+      content: '0' counter(nav-counter) ' / ';
+      counter-increment: nav-counter;
+      color: var(--text-tertiary);
+      margin-right: 4px;
+    }
+
+    .nav-links { counter-reset: nav-counter; }
+    .nav-links a:hover { color: var(--accent); }
+
+    .nav-status {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-tertiary);
+      letter-spacing: 0.08em;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-status::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+    }
+
+    /* === HERO === */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem 0 5rem;
+      position: relative;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      width: 100%;
+    }
+
+    .eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--accent);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 1.75rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .eyebrow::before {
+      content: '';
+      width: 32px; height: 1px;
+      background: var(--accent);
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 8.5vw, 6.5rem);
+      font-weight: 500;
+      line-height: 0.96;
+      letter-spacing: -0.035em;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 .italic {
+      color: var(--accent);
+      font-family: 'Instrument Serif', serif;
+      font-weight: 400;
+      font-style: italic;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-role {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      letter-spacing: 0.04em;
+    }
+
+    .hero-role span { color: var(--accent); }
+
+    .hero-desc {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      max-width: 540px;
+      line-height: 1.65;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-badges {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      padding: 6px 12px;
+      border: 1px solid var(--border-strong);
+      border-radius: 3px;
+      color: var(--text);
+      background: var(--accent-bg);
+      text-transform: uppercase;
+    }
+
+    .badge.muted {
+      background: transparent;
+      border-color: var(--border);
+      color: var(--text-secondary);
+    }
+
+    /* ID Card */
+    .id-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 0 0 1px var(--border), 0 20px 60px -20px rgba(0,0,0,0.5);
+    }
+
+    .id-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--accent);
+    }
+
+    .id-card-header {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg-elevated);
+    }
+
+    .id-card-title {
+      font-size: 10px;
+      color: var(--text-tertiary);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .id-card-id {
+      font-size: 10px;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+    }
+
+    .id-card-body {
+      padding: 18px;
+    }
+
+    .id-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 7px 0;
+      border-bottom: 1px dashed var(--border);
+    }
+
+    .id-row:last-child { border-bottom: none; }
+    .id-label { color: var(--text-tertiary); }
+    .id-value { color: var(--text); }
+    .id-value.accent { color: var(--accent); }
+
+    .id-card-footer {
+      padding: 12px 18px;
+      background: var(--bg-elevated);
+      border-top: 1px solid var(--border);
+      font-size: 10px;
+      color: var(--text-tertiary);
+      letter-spacing: 0.05em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .blink { animation: blink 1.2s steps(1) infinite; }
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--text-tertiary);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      animation: bob 2.5s ease-in-out infinite;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .scroll-hint::after {
+      content: '';
+      width: 1px; height: 32px;
+      background: linear-gradient(180deg, var(--accent), transparent);
+    }
+
+    @keyframes bob {
+      0%, 100% { transform: translate(-50%, 0); opacity: 0.5; }
+      50% { transform: translate(-50%, 6px); opacity: 1; }
+    }
+
+    @media (max-width: 768px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .scroll-hint { display: none; }
+    }
+
+    /* === SECTIONS GENERIC === */
+    section {
+      padding: 8rem 0;
+      position: relative;
+      scroll-margin-top: 72px;
+    }
+
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      margin-bottom: 1.75rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-label::before {
+      content: '';
+      width: 32px; height: 1px;
+      background: var(--accent);
+    }
+
+    .section-num {
+      color: var(--text-tertiary);
+      margin-left: auto;
+      letter-spacing: 0.1em;
+    }
+
+    .section-label-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 1.75rem;
+    }
+
+    .section-headline {
+      font-size: clamp(2rem, 5.5vw, 3.75rem);
+      font-weight: 500;
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+      margin-bottom: 1.5rem;
+      max-width: 880px;
+    }
+
+    .section-headline .italic {
+      font-family: 'Instrument Serif', serif;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--accent);
+      letter-spacing: -0.015em;
+    }
+
+    .section-sub {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      max-width: 680px;
+      line-height: 1.65;
+    }
+
+    /* Animation for fade-in on scroll */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+
+    .reveal.in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* === SCALE SECTION === */
+    .scale {
+      text-align: center;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background:
+        radial-gradient(ellipse at 50% 50%, rgba(96, 165, 250, 0.04) 0%, transparent 60%);
+    }
+
+    .scale-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .scale-number {
+      font-size: clamp(5rem, 18vw, 14rem);
+      font-weight: 600;
+      line-height: 0.95;
+      letter-spacing: -0.05em;
+      margin-bottom: 1.5rem;
+      font-feature-settings: 'tnum';
+      background: linear-gradient(180deg, var(--text) 0%, var(--accent) 110%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+
+    .scale-headline {
+      font-size: clamp(1.25rem, 2.6vw, 1.75rem);
+      font-weight: 400;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto 0.5rem;
+      letter-spacing: -0.01em;
+      line-height: 1.4;
+    }
+
+    .scale-headline strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .scale-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      max-width: 760px;
+      margin: 4rem auto 0;
+    }
+
+    .scale-stat {
+      padding: 1.5rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--bg-card);
+      text-align: left;
+      transition: border-color 0.3s, background 0.3s;
+    }
+
+    .scale-stat:hover {
+      border-color: var(--border-strong);
+      background: var(--bg-card-hover);
+    }
+
+    .scale-stat-num {
+      font-size: 1.875rem;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+      font-feature-settings: 'tnum';
+      line-height: 1;
+    }
+
+    .scale-stat-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-tertiary);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 700px) {
+      .scale-stats { grid-template-columns: 1fr; }
+    }
+
+    /* === TRUST SECTION === */
+    .trust-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .trust-quote {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(1.5rem, 2.8vw, 2.25rem);
+      font-style: italic;
+      font-weight: 400;
+      line-height: 1.3;
+      color: var(--text-secondary);
+      letter-spacing: -0.01em;
+      margin-bottom: 2rem;
+    }
+
+    .trust-quote em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .trust-stat {
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .trust-stat-num {
+      font-size: 4rem;
+      font-weight: 500;
+      line-height: 1;
+      color: var(--accent);
+      letter-spacing: -0.04em;
+      margin-bottom: 8px;
+    }
+
+    .trust-stat-desc {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--text-secondary);
+      letter-spacing: 0.04em;
+      max-width: 320px;
+      line-height: 1.5;
+    }
+
+    /* Clearance card */
+    .clearance {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .clearance::before {
+      content: 'CLASSIFIED';
+      position: absolute;
+      top: 16px; right: 16px;
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      color: var(--warn);
+      border: 1px solid var(--warn);
+      padding: 3px 8px;
+      border-radius: 2px;
+    }
+
+    .clearance-stamp {
+      display: inline-block;
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      color: var(--accent);
+      border: 1.5px solid var(--accent);
+      padding: 4px 10px;
+      border-radius: 2px;
+      margin-bottom: 1.5rem;
+    }
+
+    .clearance-row {
+      padding: 10px 0;
+      border-bottom: 1px dashed var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .clearance-row:last-child { border-bottom: none; }
+
+    .clearance-label {
+      color: var(--text-tertiary);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .clearance-value {
+      color: var(--text);
+    }
+
+    .redacted {
+      display: inline-block;
+      background: var(--text);
+      color: var(--text);
+      padding: 0 6px;
+      border-radius: 1px;
+      user-select: none;
+    }
+
+    @media (max-width: 880px) {
+      .trust-grid { grid-template-columns: 1fr; gap: 3rem; }
+    }
+
+    /* === WHAT I DO === */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3.5rem;
+    }
+
+    .skill-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2rem 1.75rem;
+      transition: border-color 0.3s, transform 0.3s, background 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .skill-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--accent);
+      transition: width 0.5s ease;
+    }
+
+    .skill-card:hover {
+      border-color: var(--border-strong);
+      background: var(--bg-card-hover);
+      transform: translateY(-4px);
+    }
+
+    .skill-card:hover::after { width: 100%; }
+
+    .skill-icon {
+      width: 40px; height: 40px;
+      border-radius: 4px;
+      background: var(--accent-bg);
+      border: 1px solid var(--border-strong);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      color: var(--accent);
+    }
+
+    .skill-icon svg { width: 20px; height: 20px; }
+
+    .skill-headline {
+      font-size: 1.25rem;
+      font-weight: 500;
+      letter-spacing: -0.015em;
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+
+    .skill-tech {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+      margin-bottom: 1rem;
+    }
+
+    .skill-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .skill-bar {
+      height: 2px;
+      background: var(--border);
+      border-radius: 1px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .skill-bar-fill {
+      height: 100%;
+      background: var(--accent);
+      width: 0;
+      transition: width 1.4s cubic-bezier(.2,.8,.2,1);
+    }
+
+    .skill-meta {
+      display: flex;
+      justify-content: space-between;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--text-tertiary);
+      letter-spacing: 0.05em;
+      margin-top: 8px;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 880px) {
+      .skills-grid { grid-template-columns: 1fr; }
+    }
+
+    /* === JOURNEY === */
+    .journey-list {
+      margin-top: 3.5rem;
+      position: relative;
+    }
+
+    .journey-list::before {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      left: 6px;
+      width: 1px;
+      background: var(--border);
+    }
+
+    .journey-item {
+      position: relative;
+      padding-left: 3rem;
+      padding-bottom: 3rem;
+    }
+
+    .journey-item:last-child { padding-bottom: 0; }
+
+    .journey-dot {
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 2px solid var(--accent);
+    }
+
+    .journey-item.upcoming .journey-dot {
+      border-color: var(--warn);
+    }
+
+    .journey-item.upcoming .journey-dot::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      border: 1px solid var(--warn);
+      animation: ping 2s ease-out infinite;
+    }
+
+    @keyframes ping {
+      0% { transform: scale(1); opacity: 1; }
+      100% { transform: scale(1.6); opacity: 0; }
+    }
+
+    .journey-meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-tertiary);
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .journey-meta .tag-upcoming {
+      color: var(--warn);
+      border: 1px solid var(--warn);
+      padding: 2px 8px;
+      border-radius: 2px;
+      margin-left: 8px;
+      font-size: 9px;
+    }
+
+    .journey-title {
+      font-size: 1.5rem;
+      font-weight: 500;
+      letter-spacing: -0.015em;
+      margin-bottom: 4px;
+    }
+
+    .journey-org {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .journey-desc {
+      color: var(--text-secondary);
+      font-size: 15px;
+      line-height: 1.6;
+      max-width: 640px;
+    }
+
+    .journey-bullets {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      max-width: 680px;
+    }
+
+    .journey-bullets li {
+      position: relative;
+      padding-left: 20px;
+      color: var(--text-secondary);
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+
+    .journey-bullets li:last-child { margin-bottom: 0; }
+
+    .journey-bullets li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 12px;
+      width: 8px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    /* === EDUCATION === */
+    .edu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 3.5rem;
+    }
+
+    .edu-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2rem;
+      transition: border-color 0.3s, background 0.3s;
+    }
+
+    .edu-card:hover {
+      border-color: var(--border-strong);
+      background: var(--bg-card-hover);
+    }
+
+    .edu-degree-type {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .edu-title {
+      font-size: 1.25rem;
+      font-weight: 500;
+      letter-spacing: -0.015em;
+      line-height: 1.3;
+      margin-bottom: 6px;
+    }
+
+    .edu-institution {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-bottom: 4px;
+    }
+
+    .edu-dates {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-tertiary);
+      letter-spacing: 0.05em;
+      margin-bottom: 1.5rem;
+    }
+
+    .edu-courses-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      padding-top: 1.25rem;
+      border-top: 1px dashed var(--border);
+    }
+
+    .edu-courses {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .edu-courses li {
+      position: relative;
+      padding-left: 16px;
+      color: var(--text-secondary);
+      font-size: 13px;
+      line-height: 1.55;
+      margin-bottom: 6px;
+    }
+
+    .edu-courses li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 9px;
+      width: 6px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .edu-extra {
+      background: var(--bg-elevated);
+      border: 1px dashed var(--border-strong);
+      border-radius: 4px;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .edu-extra-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--accent);
+      border: 1.5px solid var(--accent);
+      padding: 5px 11px;
+      border-radius: 2px;
+      letter-spacing: 0.15em;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .edu-extra-text {
+      font-size: 13.5px;
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
+
+    .edu-extra-text strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    @media (max-width: 880px) {
+      .edu-grid { grid-template-columns: 1fr; }
+      .edu-extra { flex-direction: column; align-items: flex-start; }
+    }
+
+    /* === PROJECTS === */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      margin-top: 3.5rem;
+    }
+
+    .project-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2rem;
+      transition: border-color 0.3s, background 0.3s;
+      position: relative;
+    }
+
+    .project-card:hover {
+      border-color: var(--border-strong);
+      background: var(--bg-card-hover);
+    }
+
+    .project-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-tertiary);
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+    }
+
+    .project-title {
+      font-size: 1.375rem;
+      font-weight: 500;
+      letter-spacing: -0.015em;
+      margin-bottom: 1rem;
+      line-height: 1.3;
+    }
+
+    .project-section {
+      padding: 12px 0;
+      border-top: 1px dashed var(--border);
+      font-size: 14px;
+    }
+
+    .project-section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .project-section-text {
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .project-section-text strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .project-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 1.25rem;
+      padding-top: 1.25rem;
+      border-top: 1px dashed var(--border);
+    }
+
+    .project-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--text-secondary);
+      letter-spacing: 0.05em;
+      padding: 3px 8px;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+    }
+
+    @media (max-width: 880px) {
+      .projects-grid { grid-template-columns: 1fr; }
+    }
+
+    /* === CONTACT === */
+    .contact {
+      text-align: center;
+      border-top: 1px solid var(--border);
+      background:
+        radial-gradient(ellipse at 50% 50%, rgba(96, 165, 250, 0.05) 0%, transparent 60%);
+    }
+
+    .contact-headline {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 500;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-headline .italic {
+      font-family: 'Instrument Serif', serif;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .contact-sub {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      max-width: 520px;
+      margin: 0 auto 3rem;
+      line-height: 1.6;
+    }
+
+    .contact-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 4rem;
+    }
+
+    .btn {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 14px 24px;
+      border-radius: 3px;
+      border: 1px solid var(--border-strong);
+      background: var(--accent-bg);
+      color: var(--text);
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn:hover {
+      background: var(--accent);
+      color: var(--bg);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .btn .arrow {
+      transition: transform 0.25s ease;
+    }
+
+    .btn:hover .arrow {
+      transform: translateX(4px);
+    }
+
+    .btn.secondary {
+      background: transparent;
+      border-color: var(--border);
+      color: var(--text-secondary);
+    }
+
+    .btn.secondary:hover {
+      background: var(--text);
+      color: var(--bg);
+      border-color: var(--text);
+    }
+
+    .footer-meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-tertiary);
+      letter-spacing: 0.08em;
+      padding-top: 3rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- ============================================ -->
+  <!-- NAVIGATION                                   -->
+  <!-- ============================================ -->
+  <nav>
+    <div class="container nav-inner">
+      <div class="logo">PN<span style="color:var(--accent)">.</span></div>
+      <ul class="nav-links">
+        <li><a href="#trust">clearance</a></li>
+        <li><a href="#work">work</a></li>
+        <li><a href="#journey">journey</a></li>
+        <li><a href="#education">education</a></li>
+        <li><a href="#contact">contact</a></li>
+      </ul>
+      <div class="nav-status">SYSTEM ACTIVE</div>
+    </div>
+  </nav>
+
+  <!-- ============================================ -->
+  <!-- 01 — HERO                                    -->
+  <!-- ============================================ -->
+  <section class="hero" id="hero">
+    <div class="container">
+      <div class="hero-grid">
+
+        <div class="reveal">
+          <div class="eyebrow">// Operator profile</div>
+          <h1>Peter Nguyen.<br><span class="italic">IT Specialist.</span></h1>
+          <div class="hero-role">role: <span>infrastructure / security / identity</span></div>
+          <p class="hero-desc">
+            I secure systems, manage infrastructure, and solve problems that keep
+            organizations running. Currently studying IT Infrastructure at the
+            University of Minnesota and serving in the MN Army National Guard.
+          </p>
+          <div class="hero-badges">
+            <span class="badge">TS / SCI cleared</span>
+            <span class="badge">Sec+ certified</span>
+            <span class="badge muted">Minneapolis, MN</span>
+          </div>
+        </div>
+
+        <div class="id-card reveal">
+          <div class="id-card-header">
+            <span class="id-card-title">Personnel ID</span>
+            <span class="id-card-id">/ 0001</span>
+          </div>
+          <div class="id-card-body">
+            <div class="id-row">
+              <span class="id-label">name</span>
+              <span class="id-value">P. Nguyen</span>
+            </div>
+            <div class="id-row">
+              <span class="id-label">role</span>
+              <span class="id-value">IT Specialist</span>
+            </div>
+            <div class="id-row">
+              <span class="id-label">clearance</span>
+              <span class="id-value accent">TS / SCI</span>
+            </div>
+            <div class="id-row">
+              <span class="id-label">cert</span>
+              <span class="id-value">CompTIA Sec+</span>
+            </div>
+            <div class="id-row">
+              <span class="id-label">studying</span>
+              <span class="id-value">CCNA</span>
+            </div>
+            <div class="id-row">
+              <span class="id-label">station</span>
+              <span class="id-value">Minneapolis</span>
+            </div>
+          </div>
+          <div class="id-card-footer">
+            <span>STATUS</span>
+            <span style="color:var(--accent)">ACTIVE<span class="blink">_</span></span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="scroll-hint">scroll</div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- 02 — SCALE                                   -->
+  <!-- ============================================ -->
+  <section class="scale" id="scale">
+    <div class="container">
+      <div class="reveal">
+        <div class="scale-eyebrow">// 02 / scale</div>
+        <div class="scale-number" data-target="500000" data-suffix="+">500,000+</div>
+        <p class="scale-headline">
+          devices tracked. <strong>One help desk.</strong> <span style="color:var(--text)">My help desk.</span>
+        </p>
+      </div>
+
+      <div class="scale-stats reveal">
+        <div class="scale-stat">
+          <div class="scale-stat-num" data-target="50000" data-suffix="+">50,000+</div>
+          <div class="scale-stat-label">campus users served</div>
+        </div>
+        <div class="scale-stat">
+          <div class="scale-stat-num">4.8 / 5</div>
+          <div class="scale-stat-label">avg user rating</div>
+        </div>
+        <div class="scale-stat">
+          <div class="scale-stat-num">Tier 1+2</div>
+          <div class="scale-stat-label">support coverage</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- 03 — TRUST / CLEARANCE                       -->
+  <!-- ============================================ -->
+  <section id="trust">
+    <div class="container">
+      <div class="trust-grid">
+
+        <div class="reveal">
+          <div class="section-label">// 03 / clearance</div>
+          <h2 class="section-headline">
+            Trusted at the <span class="italic">highest level.</span>
+          </h2>
+          <p class="trust-quote">
+            A <em>Top Secret / SCI</em> clearance means the U.S. government has verified
+            I can be trusted with classified national security information.
+          </p>
+
+          <div class="trust-stat">
+            <div class="trust-stat-num">&lt; 1%</div>
+            <div class="trust-stat-desc">of the U.S. population holds a TS/SCI clearance.</div>
+          </div>
+        </div>
+
+        <div class="clearance reveal">
+          <div class="clearance-stamp">DECLASSIFIED</div>
+          <div class="clearance-row">
+            <span class="clearance-label">subject</span>
+            <span class="clearance-value">P. Nguyen</span>
+          </div>
+          <div class="clearance-row">
+            <span class="clearance-label">clearance level</span>
+            <span class="clearance-value" style="color:var(--accent)">TS / SCI</span>
+          </div>
+          <div class="clearance-row">
+            <span class="clearance-label">issuing authority</span>
+            <span class="clearance-value">U.S. Dept. of Defense</span>
+          </div>
+          <div class="clearance-row">
+            <span class="clearance-label">verified</span>
+            <span class="clearance-value">2023</span>
+          </div>
+          <div class="clearance-row">
+            <span class="clearance-label">status</span>
+            <span class="clearance-value" style="color:var(--accent)">ACTIVE</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- 04 — WHAT I DO                               -->
+  <!-- ============================================ -->
+  <section id="work">
+    <div class="container">
+
+      <div class="reveal">
+        <div class="section-label">// 04 / capabilities</div>
+        <h2 class="section-headline">
+          Here's what I <span class="italic">actually</span> do.
+        </h2>
+        <p class="section-sub">
+          Three core areas. Plain-English headlines for what they accomplish.
+          The technical stack underneath if you want to dig in.
+        </p>
+      </div>
+
+      <div class="skills-grid">
+
+        <div class="skill-card reveal">
+          <div class="skill-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M12 2 L4 6 V12 C4 17 8 21 12 22 C16 21 20 17 20 12 V6 L12 2 Z"/>
+              <path d="M9 12 l2 2 l4 -4"/>
+            </svg>
+          </div>
+          <div class="skill-headline">Keep accounts safe</div>
+          <div class="skill-tech">Azure Entra · SSO · IAM · PoLP</div>
+          <p class="skill-desc">
+            Configure single sign-on so people log in once, securely. Apply
+            least-privilege so no one has more access than they need.
+          </p>
+          <div class="skill-bar"><div class="skill-bar-fill" data-pct="88"></div></div>
+          <div class="skill-meta">
+            <span>identity &amp; access</span>
+            <span>88%</span>
+          </div>
+        </div>
+
+        <div class="skill-card reveal">
+          <div class="skill-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <rect x="3" y="4" width="18" height="13" rx="1.5"/>
+              <line x1="3" y1="14" x2="21" y2="14"/>
+              <line x1="9" y1="20" x2="15" y2="20"/>
+              <line x1="12" y1="17" x2="12" y2="20"/>
+            </svg>
+          </div>
+          <div class="skill-headline">Secure devices at scale</div>
+          <div class="skill-tech">Microsoft Intune · Jamf · Endpoint Hardening</div>
+          <p class="skill-desc">
+            Manage thousands of laptops and phones from one console. Push
+            security policies, deploy software, and lock down compromised devices.
+          </p>
+          <div class="skill-bar"><div class="skill-bar-fill" data-pct="80"></div></div>
+          <div class="skill-meta">
+            <span>endpoint &amp; device mgmt</span>
+            <span>80%</span>
+          </div>
+        </div>
+
+        <div class="skill-card reveal">
+          <div class="skill-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <circle cx="12" cy="12" r="9"/>
+              <path d="M3 12 H21"/>
+              <path d="M12 3 C15 7 15 17 12 21"/>
+              <path d="M12 3 C9 7 9 17 12 21"/>
+            </svg>
+          </div>
+          <div class="skill-headline">Build reliable networks</div>
+          <div class="skill-tech">Cisco · Aruba · VLANs · ACLs · Firewalls</div>
+          <p class="skill-desc">
+            Configure switches, routers, and firewalls so traffic flows fast and
+            stays segmented. Migrate legacy hardware to modern infrastructure.
+          </p>
+          <div class="skill-bar"><div class="skill-bar-fill" data-pct="84"></div></div>
+          <div class="skill-meta">
+            <span>networking &amp; infra</span>
+            <span>84%</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- 05 — JOURNEY                                 -->
+  <!-- ============================================ -->
+  <section id="journey">
+    <div class="container">
+
+      <div class="reveal">
+        <div class="section-label">// 05 / journey</div>
+        <h2 class="section-headline">
+          Where I've <span class="italic">been.</span>
+        </h2>
+        <p class="section-sub">
+          From classified networks in the National Guard to half a million
+          devices at a Big Ten university. Each role added a new layer.
+        </p>
+      </div>
+
+      <div class="journey-list">
+
+        <div class="journey-item upcoming reveal">
+          <div class="journey-dot"></div>
+          <div class="journey-meta">
+            Summer 2026 <span class="tag-upcoming">UPCOMING</span>
+          </div>
+          <h3 class="journey-title">IT Infrastructure Intern</h3>
+          <div class="journey-org">Jack Links — Minneapolis, MN</div>
+          <ul class="journey-bullets">
+            <li>Create, implement, and deploy Azure SAML/OIDC Enterprise SSO applications with least-privilege access</li>
+            <li>Support VMware and Nutanix virtual server requests; migrate legacy Windows Server 2016 instances</li>
+            <li>Deploy Microsoft Intune endpoint baselines and hardening policies to mature endpoint security</li>
+            <li>Audit and clean up the SharePoint and M365 environment; identify sensitive data and unused sites</li>
+            <li>Attend intake meetings for new security, network, and infrastructure projects across IT and OT networks</li>
+          </ul>
+        </div>
+
+        <div class="journey-item reveal">
+          <div class="journey-dot"></div>
+          <div class="journey-meta">May 2025 — Present</div>
+          <h3 class="journey-title">Senior Help Desk Technician</h3>
+          <div class="journey-org">University of Minnesota</div>
+          <ul class="journey-bullets">
+            <li>Provide Tier 1 + 2 support across hardware, software, and network issues across a campus of 50,000+ users</li>
+            <li>Engage in IAM + Endpoint practices using Jamf, Intune, + Azure to track inventory of over 500,000 devices</li>
+            <li>Use Team Dynamix ticketing system to optimize workflow and UX in troubleshooting; average user rating of 4.8/5</li>
+          </ul>
+        </div>
+
+        <div class="journey-item reveal">
+          <div class="journey-dot"></div>
+          <div class="journey-meta">June 2025 — Aug 2025</div>
+          <h3 class="journey-title">IT Intern</h3>
+          <div class="journey-org">Ever-Green Energy</div>
+          <ul class="journey-bullets">
+            <li>Upgraded switches from Cisco 3400 to Aruba 6300 for a network supporting 200+ users and 1,500+ devices</li>
+            <li>Deployed Windows 11 devices and supported user onboarding via Endpoint Central and ADUC with GPOs</li>
+            <li>Developed PA Firewall configuration and shadowed network monitoring using Zabbix, NetBox, and Tenable</li>
+          </ul>
+        </div>
+
+        <div class="journey-item reveal">
+          <div class="journey-dot"></div>
+          <div class="journey-meta">July 2024 — May 2025</div>
+          <h3 class="journey-title">MI Systems Maintainer / Integrator</h3>
+          <div class="journey-org">MN Army National Guard</div>
+          <ul class="journey-bullets">
+            <li>Configured UNIX, Linux, and Windows OS; managed VMware backups, snapshots, and ESXi blade server clusters</li>
+            <li>Maintained confidential NIPR, SIPR, and JWICS networks by configuring Cisco switches + routers (VLANs, ACLs)</li>
+            <li>Performed PMCS and repairs on antenna systems (Trojan, DCGS-A) using spectrum analyzers + oscilloscopes</li>
+          </ul>
+        </div>
+
+        <div class="journey-item reveal">
+          <div class="journey-dot"></div>
+          <div class="journey-meta">Seasonal since Nov 2021</div>
+          <h3 class="journey-title">Head Election Judge</h3>
+          <div class="journey-org">Ramsey County Elections Office</div>
+          <ul class="journey-bullets">
+            <li>Oversaw secure operation of endpoint devices (poll pads/counters), ensuring compliance and continuous uptime</li>
+            <li>Logged, assessed, and escalated equipment incidents and anomalies; coordinated emergency response/resolution</li>
+            <li>Directed site operations (setup/closeout); managed team to maintain device and materials chain of custody</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- 06 — EDUCATION                               -->
+  <!-- ============================================ -->
+  <section id="education">
+    <div class="container">
+
+      <div class="reveal">
+        <div class="section-label">// 06 / training</div>
+        <h2 class="section-headline">
+          How I've been <span class="italic">trained.</span>
+        </h2>
+        <p class="section-sub">
+          Two parallel tracks: infrastructure fundamentals at the University of
+          Minnesota, and military intelligence systems at Cochise College.
+        </p>
+      </div>
+
+      <div class="edu-grid">
+
+        <div class="edu-card reveal">
+          <div class="edu-degree-type">/ bachelor's · BAS</div>
+          <h3 class="edu-title">Information Technology Infrastructure</h3>
+          <div class="edu-institution">University of Minnesota — Twin Cities</div>
+          <div class="edu-dates">Sept 2024 — May 2028</div>
+          <div class="edu-courses-label">// relevant coursework</div>
+          <ul class="edu-courses">
+            <li>Algorithms, Data Structures, and Program Development</li>
+            <li>Strategic Management + Leadership</li>
+            <li>Security: Policy + Regulation</li>
+            <li>IT Projects + Processes</li>
+          </ul>
+        </div>
+
+        <div class="edu-card reveal">
+          <div class="edu-degree-type">/ associate's · AAS</div>
+          <h3 class="edu-title">Military Intelligence Systems Technician</h3>
+          <div class="edu-institution">Cochise College</div>
+          <div class="edu-dates">Aug 2024 — Aug 2026</div>
+          <div class="edu-courses-label">// relevant coursework</div>
+          <ul class="edu-courses">
+            <li>Microsoft Servers and Active Directory</li>
+            <li>Microsoft Windows Operating Systems</li>
+            <li>Network Support and Troubleshooting</li>
+            <li>Linux Server Administration</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="edu-extra reveal">
+        <span class="edu-extra-badge">IB DIPLOMA</span>
+        <p class="edu-extra-text">
+          <strong>International Baccalaureate Diploma holder.</strong> Completed the
+          full IB curriculum in high school — an internationally recognized,
+          rigorous two-year program emphasizing critical thinking, research, and breadth across six subject areas.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- 07 — PROJECTS                                -->
+  <!-- ============================================ -->
+  <section id="projects">
+    <div class="container">
+
+      <div class="reveal">
+        <div class="section-label">// 07 / field operations</div>
+        <h2 class="section-headline">
+          Things I've <span class="italic">built or fixed.</span>
+        </h2>
+        <p class="section-sub">
+          Real outcomes from real environments. Each project: the problem, the
+          action, and the result.
+        </p>
+      </div>
+
+      <div class="projects-grid">
+
+        <div class="project-card reveal">
+          <div class="project-num">/ project 001</div>
+          <h3 class="project-title">Office Network Modernization</h3>
+          <div class="project-section">
+            <div class="project-section-label">// problem</div>
+            <p class="project-section-text">
+              Legacy Cisco 3400 switches were bottlenecking a 200-user office
+              with over 1,500 connected devices.
+            </p>
+          </div>
+          <div class="project-section">
+            <div class="project-section-label">// action</div>
+            <p class="project-section-text">
+              Planned and executed a full upgrade to <strong>Aruba 6300</strong>
+              switches with no production downtime.
+            </p>
+          </div>
+          <div class="project-section">
+            <div class="project-section-label">// result</div>
+            <p class="project-section-text">
+              Faster, more secure connections and a network architecture
+              ready for the next decade of growth.
+            </p>
+          </div>
+          <div class="project-tags">
+            <span class="project-tag">Cisco</span>
+            <span class="project-tag">Aruba</span>
+            <span class="project-tag">VLANs</span>
+            <span class="project-tag">Migration</span>
+          </div>
+        </div>
+
+        <div class="project-card reveal">
+          <div class="project-num">/ project 002</div>
+          <h3 class="project-title">Endpoint Fleet Management at Scale</h3>
+          <div class="project-section">
+            <div class="project-section-label">// problem</div>
+            <p class="project-section-text">
+              A campus of 50,000+ users with 500,000+ devices needed reliable
+              support and inventory tracking.
+            </p>
+          </div>
+          <div class="project-section">
+            <div class="project-section-label">// action</div>
+            <p class="project-section-text">
+              Operate <strong>Jamf, Intune, and Azure</strong> for IAM and endpoint
+              management; resolve tickets via Team Dynamix.
+            </p>
+          </div>
+          <div class="project-section">
+            <div class="project-section-label">// result</div>
+            <p class="project-section-text">
+              Maintained a <strong>4.8 / 5 user rating</strong> while keeping the
+              fleet inventoried and compliant.
+            </p>
+          </div>
+          <div class="project-tags">
+            <span class="project-tag">Jamf</span>
+            <span class="project-tag">Intune</span>
+            <span class="project-tag">Azure</span>
+            <span class="project-tag">IAM</span>
+          </div>
+        </div>
+
+        <div class="project-card reveal">
+          <div class="project-num">/ project 003</div>
+          <h3 class="project-title">Classified Network Operations</h3>
+          <div class="project-section">
+            <div class="project-section-label">// problem</div>
+            <p class="project-section-text">
+              Maintain availability and integrity of NIPR, SIPR, and JWICS
+              networks across military operations.
+            </p>
+          </div>
+          <div class="project-section">
+            <div class="project-section-label">// action</div>
+            <p class="project-section-text">
+              Configured <strong>Cisco switches and routers</strong> with VLANs and
+              ACLs; managed VMware backups and ESXi blade clusters.
+            </p>
+          </div>
+          <div class="project-section">
+            <div class="project-section-label">// result</div>
+            <p class="project-section-text">
+              Continuous, secure operation of three classified networks
+              supporting active intelligence missions.
+            </p>
+          </div>
+          <div class="project-tags">
+            <span class="project-tag">VMware</span>
+            <span class="project-tag">ESXi</span>
+            <span class="project-tag">Cisco</span>
+            <span class="project-tag">NIPR/SIPR/JWICS</span>
+          </div>
+        </div>
+
+        <div class="project-card reveal">
+          <div class="project-num">/ project 004</div>
+          <h3 class="project-title">Endpoint Deployment + GPO Rollouts</h3>
+          <div class="project-section">
+            <div class="project-section-label">// problem</div>
+            <p class="project-section-text">
+              An organization needed a clean Windows 11 fleet rollout with
+              standardized policy enforcement.
+            </p>
+          </div>
+          <div class="project-section">
+            <div class="project-section-label">// action</div>
+            <p class="project-section-text">
+              Deployed <strong>Windows 11</strong> via Endpoint Central; configured
+              users in ADUC; pushed GPOs for standards.
+            </p>
+          </div>
+          <div class="project-section">
+            <div class="project-section-label">// result</div>
+            <p class="project-section-text">
+              A consistent, hardened baseline across user devices with smooth
+              onboarding for new hires.
+            </p>
+          </div>
+          <div class="project-tags">
+            <span class="project-tag">Windows 11</span>
+            <span class="project-tag">ADUC</span>
+            <span class="project-tag">GPO</span>
+            <span class="project-tag">Endpoint Central</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- 07 — CONTACT                                 -->
+  <!-- ============================================ -->
+  <section class="contact" id="contact">
+    <div class="container">
+
+      <div class="reveal">
+        <div class="section-label" style="justify-content:center">// 08 / open transmission</div>
+        <h2 class="contact-headline">
+          Let's <span class="italic">connect.</span>
+        </h2>
+        <p class="contact-sub">
+          Recruiting, collaborating, or just want to talk shop? Reach out
+          through any of the channels below.
+        </p>
+
+        <div class="contact-actions">
+          <a href="mailto:peter1616nguyen@gmail.com" class="btn">
+            send email
+            <span class="arrow">→</span>
+          </a>
+          <a href="https://www.linkedin.com/in/peter-nguyen-it/" target="_blank" rel="noopener" class="btn secondary">
+            linkedin
+            <span class="arrow">↗</span>
+          </a>
+        </div>
+
+        <div class="footer-meta">
+          <span>// peter nguyen · 2026</span>
+          <span>// minneapolis, mn</span>
+          <span>// all systems nominal</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <script>
+    /* === Reveal on scroll === */
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          // Trigger skill bar fills inside this reveal
+          e.target.querySelectorAll('.skill-bar-fill').forEach(bar => {
+            const pct = bar.getAttribute('data-pct');
+            requestAnimationFrame(() => bar.style.width = pct + '%');
+          });
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    /* === Counter animation for big numbers === */
+    function animateCounter(el) {
+      const target = parseInt(el.getAttribute('data-target'), 10);
+      const suffix = el.getAttribute('data-suffix') || '';
+      const duration = 1800;
+      const start = performance.now();
+
+      function step(now) {
+        const t = Math.min((now - start) / duration, 1);
+        // Ease-out
+        const eased = 1 - Math.pow(1 - t, 3);
+        const value = Math.round(target * eased);
+        el.textContent = value.toLocaleString() + suffix;
+        if (t < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
+    const counterIO = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          animateCounter(e.target);
+          counterIO.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('[data-target]').forEach(el => counterIO.observe(el));
+  </script>
+
+</body>
+</html>
